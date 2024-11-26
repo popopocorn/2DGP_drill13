@@ -206,8 +206,8 @@ class Boy:
         # modify here
         #self.x, self.y = get_canvas_width() / 2, get_canvas_height() / 2
         self.x, self.y = server.background.w / 2, server.background.h / 2
-
-
+        self.sx, self.sy=0, 0
+        self.ball_count=-100
     def update(self):
         # modify here
         self.state_machine.update()
@@ -232,12 +232,13 @@ class Boy:
         self.image.clip_draw(int(self.frame) * 100, self.action * 100, 100, 100, self.sx, self.sy)
         self.font.draw(int(self.sx - 100), int(self.sy + 60), f'({self.x:5.5}, {self.y:5.5})', (255, 255, 0))
         draw_rectangle(*self.get_bb())
-
+        self.font.draw(int(self.sx - 10), int(self.sy + 100), str(self.ball_count), (255, 255, 0))
     def get_bb(self):
         return self.sx - 20, self.sy - 50, self.sx + 20, self.sy + 50
 
     def handle_collision(self, group, other):
-        pass
+        if group == "boy:ball":
+            self.ball_count += 1
 
 
 
